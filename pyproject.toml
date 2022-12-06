@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "NLP_Transformers_HuggingFace"
+version = "0.1.0"
+description = ""
+authors = ["Tiago Reis <Tiago.B.C.Reis@hotmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.9, <3.11"
+tensorflow = "2.11.0"
+# pytorch = "1.12.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
