@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/NLP_Transformers.iml" filepath="$PROJECT_DIR$/.idea/NLP_Transformers.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../NLP_Transformers/.idea/NLP_Transformers.iml" filepath="$PROJECT_DIR$/../NLP_Transformers/.idea/NLP_Transformers.iml" />
     </modules>
   </component>
 </project>

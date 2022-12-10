@@ -9,3 +9,5 @@ The purpose of this project is to create a code that allows the user to give a t
 - Question answering;
 - Summarization;
 - Translation.
+
+# Still under development.
