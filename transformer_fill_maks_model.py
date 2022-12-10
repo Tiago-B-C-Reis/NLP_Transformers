@@ -1,20 +1,65 @@
+# !pip install datasets evaluate transformers[sentencepiece]
+# pip install transformers
+# pip install transformers[tf-cpu]
 from transformers import pipeline
+import tensorflow as tf
+from transformers import AutoTokenizer, TFAutoModelForSequenceClassification
+from transformers import AutoTokenizer
+
+tokenizer = AutoTokenizer.from_pretrained("distilbert-base-cased")
+sequence = " The game 's battle system , the BliTZ system , is carried over directly from Valkyira Chronicles . "
+tokens = tokenizer.tokenize(sequence)
+print(tokens)
+
+# Result:
+# ['The', 'game', "'", 's', 'battle', 'system', ',', 'the', 'B', '##li', '##T', '##Z', 'system', ',', 'is',
+# 'carried', 'over', 'directly', 'from', 'Val', '##ky', '##ira', 'Chronicles', '.']
+
+unmasker = pipeline('fill-mask', model='distilbert-base-cased')
+unmasker(" The game 's battle [MASK] , the BliTZ system , is carried over directly from Valkyira Chronicles . "
+         "During missions , players select each unit using a top @-@ down perspective of the battlefield map : "
+         "once a character is selected , the player moves the character around the battlefield in third @-@ person . "
+         "A character can only act once per @-@ turn , but characters can be granted multiple turns at the expense of "
+         "other characters ' turns . "
+         "Each character has a field and distance of movement limited by their Action Gauge . "
+         "Up to nine characters can be assigned to a single mission . During gameplay , characters will call out if "
+         "something happens to them , such as their health points ( HP ) getting low or being knocked out by "
+         "enemy attacks . "
+         "Each character has specific \" Potentials \" , skills unique to each character . "
+         "They are divided into \" Personal Potential \" , which are innate skills that remain unaltered unless "
+         "otherwise dictated by the story and can either help or impede a character , and \" Battle Potentials \" , "
+         "which are grown throughout the game and always grant boons to a character . To learn Battle Potentials , "
+         "each character has a unique \" Masters Table \" , a grid @-@ based skill table that can be used to acquire "
+         "and link different skills . Characters also have Special Abilities that grant them temporary boosts on the "
+         "battlefield : Kurt can activate \" Direct Command \" and move around the battlefield without depleting his "
+         "Action Point gauge , the character Reila can shift into her \" Valkyria Form \" and become invincible , "
+         "while Imca can target multiple enemy units with her heavy weapon . \n ")
 
 
-unmasker = pipeline('fill-mask', model='distilbert-base-uncased')
-unmasker("The majority of material created [MASK] previous games , such as the BLiTZ system and the design of maps , "
-         "was carried over . Alongside this , improvements were made to the game 's graphics and some elements were "
-         "expanded , such as map layouts , mission structure , and the number of playable units per mission . "
-         "A part of this upgrade involved creating unique polygon models for each character 's body . "
-         "In order to achieve this , the cooperative elements incorporated into the second game were removed , "
-         "as they took up a large portion of memory space needed for the improvements . They also adjusted the "
-         "difficulty settings and ease of play so they could appeal to new players while retaining the essential "
-         "components of the series ' gameplay . The newer systems were decided upon early in development . "
-         "The character designs were done by Raita Honjou , who had worked on the previous Valkyria Chronicles games . "
-         "When creating the Nameless Squad , Honjou was faced with the same problem he had had during the first game : "
-         "the military uniforms essentially destroyed character individuality , despite him needing to create unique"
-         " characters the player could identify while maintaining a sense of reality within the Valkyria Chronicles "
-         "world . The main color of the Nameless was black . As with the previous Valkyria games , Valkyria Chronicles"
-         " III used the CANVAS graphics engine . The anime opening was produced by Production I.G.")
+# Steps that I have performed:
+# 1 - Learn from the HuggingFace course.
 
+# 2 - Follow the transformers installation steps "https://huggingface.co/docs/transformers/installation".
 
+# 3 - Download 'wikitext-2-raw-v1' with only the train split, read it with a json viewer and take
+# the 11th example (row_idx : 10).
+
+# 4 - Use the tokenizer from the "distilbert-base-cased" model checkpoint (this model uses the "WordPiece" tokenization)
+# and find the token nº6 (index : 5), that is the token "battle".
+
+# 5 - From transformers import the pipeline. This pipeline already perform all the needed steps starting from
+# tokenizing, using the model and post-processing it in other to get the predictions.
+
+# 6 - Used the requested "distilbert-base-cased" model (that is a checkpoint) based on the BERT architecture.
+# Since this model is based on the BERT architecture, it means that is mainly an "Encoder" and one of its main tasks
+# is to do "Masked language modeling" which is the required purpose. In the model description is mentioned that I
+# can use the raw model for masked language modeling, which means that the model can perform a good result without the
+# need for fine-tuning in this particular case.
+
+# 7 - Input the 11th example from the 'wikitext-2-raw-v1' on the "unmasker()", but with the [MASK] token replacing the
+# token nº6 that was 'battle'.
+
+# 8 - Run the code.
+
+# 9 - Result:
+# Nº1 with the score of 0.19702 = token_str: 'mechanic'.
