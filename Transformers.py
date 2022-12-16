@@ -1,6 +1,3 @@
-# !pip install datasets evaluate transformers[sentencepiece]
-# pip install transformers
-# pip install transformers[tf-cpu]
 from transformers import pipeline, set_seed
 import tensorflow as tf
 from transformers import AutoTokenizer, TFAutoModelForSequenceClassification
